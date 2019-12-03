@@ -16,7 +16,15 @@ class UserController {
       return res.status(400).json({ error: 'Validation failed' });
     }
 
-    const { id, email } = await User.create({
+    const { email } = req.body;
+
+    const user = await User.findOne({ where: { email } });
+
+    if (user) {
+      return res.status(401).json({ error: 'User already exists' });
+    }
+
+    const { id } = await User.create({
       email: req.body.email,
       password: req.body.password,
     });
