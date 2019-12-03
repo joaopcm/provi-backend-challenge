@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 const routes = new Router();
 
-routes.get('/', (req, res) => {
+routes.get('/hello', (req, res) => {
   return res.json({ message: 'hello world!' });
 });
 
