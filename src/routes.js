@@ -2,8 +2,8 @@ import { Router } from 'express';
 
 const routes = new Router();
 
-routes.get('/hello', (req, res) => {
-  return res.json({ message: 'hello world!' });
+routes.post('/users', (req, res) => {
+  return res.json({ message: 'UserController' });
 });
 
 export default routes;
