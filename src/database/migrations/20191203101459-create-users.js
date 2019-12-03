@@ -13,7 +13,7 @@ module.exports = {
         unique: true,
       },
       password_hash: {
-        type: Sequelize.STIRNG,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {
@@ -27,7 +27,7 @@ module.exports = {
     });
   },
 
-  down: (queryInterface, Sequelize) => {
+  down: queryInterface => {
     return queryInterface.dropTable('users');
   },
 };
