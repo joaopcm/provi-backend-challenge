@@ -6,12 +6,13 @@ class User extends Model {
     super.init(
       {
         email: Sequelize.STRING,
-        password: Sequelize.STRING,
+        password: Sequelize.VIRTUAL,
+        password_hash: Sequelize.STRING,
       },
       { sequelize }
     );
 
-    this.addHook('beforeSafe', async user => {
+    this.addHook('beforeSave', async user => {
       if (user.password) {
         user.password_hash = await bcrypt.hash(user.password, 8);
       }
