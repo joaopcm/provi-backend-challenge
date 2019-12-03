@@ -3,8 +3,18 @@ import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 
 import User from '../app/models/User';
+import Endpoint from '../app/models/Endpoint';
+import EndpointField from '../app/models/EndpointField';
+import EndpointFieldValue from '../app/models/EndpointFieldValue';
+import EndpointOrder from '../app/models/EndpointOrder';
 
-const models = [User];
+const models = [
+  User,
+  Endpoint,
+  EndpointField,
+  EndpointFieldValue,
+  EndpointOrder,
+];
 
 class Database {
   constructor() {
