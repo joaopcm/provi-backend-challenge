@@ -1,13 +1,13 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('endpoints_fields_values', {
+    return queryInterface.createTable('endpoints_field_values', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      endpoint_field_id: {
+      endpoints_field_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -43,6 +43,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('endpoints_fields_values');
+    return queryInterface.dropTable('endpoints_field_values');
   },
 };

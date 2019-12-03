@@ -1,7 +1,7 @@
 module.exports = {
   up: QueryInterface => {
     return QueryInterface.bulkInsert(
-      'endpoints_order',
+      'endpoints_orders',
       [
         {
           endpoint_id: 1,

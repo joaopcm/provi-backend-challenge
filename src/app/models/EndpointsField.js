@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-class EndpointField extends Model {
+class EndpointsField extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -18,7 +18,11 @@ class EndpointField extends Model {
       foreignKey: 'endpoint_id',
       as: 'endpoint',
     });
+
+    this.hasMany(models.EndpointsFieldValue, {
+      as: 'values',
+    });
   }
 }
 
-export default EndpointField;
+export default EndpointsField;

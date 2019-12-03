@@ -11,6 +11,17 @@ class Endpoint extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.EndpointsField, {
+      as: 'fields',
+    });
+
+    this.hasMany(models.EndpointsOrder, {
+      foreignKey: 'endpoint_id',
+      as: 'order',
+    });
+  }
 }
 
 export default Endpoint;

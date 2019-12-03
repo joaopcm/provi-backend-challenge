@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-class EndpointOrder extends Model {
+class EndpointsOrder extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -21,4 +21,4 @@ class EndpointOrder extends Model {
   }
 }
 
-export default EndpointOrder;
+export default EndpointsOrder;

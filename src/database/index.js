@@ -4,9 +4,9 @@ import databaseConfig from '../config/database';
 
 import User from '../app/models/User';
 import Endpoint from '../app/models/Endpoint';
-import EndpointField from '../app/models/EndpointField';
-import EndpointFieldValue from '../app/models/EndpointFieldValue';
-import EndpointOrder from '../app/models/EndpointOrder';
+import EndpointField from '../app/models/EndpointsField';
+import EndpointFieldValue from '../app/models/EndpointsFieldValue';
+import EndpointOrder from '../app/models/EndpointsOrder';
 
 const models = [
   User,
