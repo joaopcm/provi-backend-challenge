@@ -39,11 +39,11 @@ class EndpointController {
     if (typeof data === 'object') {
       // ...
     } else {
-      await EndpointFieldValue.create({
-        user_id: req.userId,
-        endpoints_field_id: endpoint.getDataValue('fields')[0].id,
-        value: data,
-      });
+      // await EndpointFieldValue.create({
+      //   user_id: req.userId,
+      //   endpoints_field_id: endpoint.getDataValue('fields')[0].id,
+      //   value: data,
+      // });
     }
 
     return res.json({ ok: 'ok' });

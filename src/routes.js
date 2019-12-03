@@ -6,6 +6,7 @@ import EndpointController from './app/controllers/EndpointController';
 
 import authMiddleware from './app/middlewares/auth';
 import checkEndpointMiddleware from './app/middlewares/checkEndpoint';
+import checkEndpointProgress from './app/middlewares/checkEndpointProgress';
 
 const routes = new Router();
 
@@ -17,6 +18,7 @@ routes.use(authMiddleware);
 routes.post(
   '/endpoints/:slug',
   checkEndpointMiddleware,
+  checkEndpointProgress,
   EndpointController.store
 );
 
