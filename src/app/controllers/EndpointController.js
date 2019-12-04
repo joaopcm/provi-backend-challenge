@@ -74,7 +74,10 @@ class EndpointController {
       }
     }
 
-    return res.json(fields);
+    return res.json({
+      success: true,
+      next_end_point: `/endpoints/${req.nextEndPointSlug}`,
+    });
   }
 }
 
