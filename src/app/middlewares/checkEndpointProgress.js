@@ -50,7 +50,8 @@ export default async (req, res, next) => {
 
   if (beforeEndpointsWithNoAwnswersFiltered.length > 0) {
     return res.status(400).json({
-      error: `Please, enter your ${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug} data.`,
+      error: `Please, enter your ${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug} data`,
+      next_end_point: `/endpoints/${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug}`,
     });
   }
 
