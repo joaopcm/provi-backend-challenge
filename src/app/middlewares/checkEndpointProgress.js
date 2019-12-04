@@ -52,5 +52,23 @@ export default async (req, res, next) => {
     });
   }
 
+  const nextEndpoint = await Endpoint.findOne({
+    attributes: ['slug'],
+    include: [
+      {
+        model: EndpointOrder,
+        as: 'order',
+        where: {
+          order: {
+            [Op.gt]: currentOrder,
+          },
+        },
+        attributes: [],
+      },
+    ],
+  });
+
+  req.nextEndPointSlug = nextEndpoint.getDataValue('slug');
+
   return next();
 };
