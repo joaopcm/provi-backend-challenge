@@ -17,6 +17,9 @@ class EndpointController {
           where: {
             user_id: req.userId,
           },
+          order: [['created_at', 'desc']],
+          required: false,
+          limit: 1,
         },
       ],
     });
@@ -41,10 +44,10 @@ class EndpointController {
 
       Promise.all(
         fields.map(field => {
-          // TODO - Add validation for check if the current value is the same
-
           if (
-            field.getDataValue('value') !== data[field.getDataValue('title')]
+            !field.getDataValue('values')[0] ||
+            field.getDataValue('values')[0].value !==
+              data[field.getDataValue('title')]
           ) {
             return EndpointFieldValue.create({
               endpoints_field_id: field.getDataValue('id'),
