@@ -21,9 +21,6 @@ export default async (req, res, next) => {
         model: EndpointFieldValue,
         as: 'values',
         required: false,
-        where: {
-          id: null,
-        },
         attributes: ['user_id', 'value'],
       },
       {
@@ -45,12 +42,12 @@ export default async (req, res, next) => {
   });
 
   const beforeEndpointsWithNoAwnswersFiltered = beforeEndpointsWithNoAwnswers.filter(
-    item => item.endpoint
+    item => item.endpoint && item.values.length === 0
   );
 
   if (beforeEndpointsWithNoAwnswersFiltered.length > 0) {
     return res.status(400).json({
-      error: `Please, enter your ${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug} data`,
+      error: `Please, enter your ${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug.toUpperCase()} data first`,
       next_end_point: `/endpoints/${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug}`,
     });
   }

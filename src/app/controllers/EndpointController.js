@@ -5,36 +5,7 @@ import EndpointOrder from '../models/EndpointsOrder';
 
 class EndpointController {
   async store(req, res) {
-    const { slug } = req.params;
     const { data } = req.body;
-
-    // const endpoint = await Endpoint.findByPk(req.endpointId, {
-    //   attributes: ['id', 'slug'],
-    //   include: [
-    //     {
-    //       model: EndpointField,
-    //       as: 'fields',
-    //       attributes: ['id', 'title'],
-    //       include: [
-    //         {
-    //           model: EndpointFieldValue,
-    //           as: 'values',
-    //           order: [['created_at', 'desc']],
-    //           limit: 1,
-    //           where: {
-    //             user_id: req.userId,
-    //           },
-    //           attributes: ['value', 'updated_at'],
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       model: EndpointOrder,
-    //       as: 'order',
-    //       attributes: ['order'],
-    //     },
-    //   ],
-    // });
 
     const fields = await EndpointField.findAll({
       where: {
