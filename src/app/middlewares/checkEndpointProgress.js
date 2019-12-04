@@ -11,9 +11,11 @@ export default async (req, res, next) => {
     where: {
       endpoint_id: req.endpointId,
     },
+    order: ['order'],
   });
 
   const beforeEndpointsWithNoAwnswers = await EndpointField.findAll({
+    attributes: ['title'],
     include: [
       {
         model: EndpointFieldValue,
@@ -22,6 +24,7 @@ export default async (req, res, next) => {
         where: {
           id: null,
         },
+        attributes: ['user_id', 'value'],
       },
       {
         model: Endpoint,
@@ -34,7 +37,9 @@ export default async (req, res, next) => {
               [Op.lt]: currentOrder,
             },
           },
+          attributes: ['order'],
         },
+        attributes: ['id', 'slug'],
       },
     ],
   });
@@ -42,8 +47,6 @@ export default async (req, res, next) => {
   const beforeEndpointsWithNoAwnswersFiltered = beforeEndpointsWithNoAwnswers.filter(
     item => item.endpoint
   );
-
-  return res.json(beforeEndpointsWithNoAwnswers);
 
   if (beforeEndpointsWithNoAwnswersFiltered.length > 0) {
     return res.status(400).json({
