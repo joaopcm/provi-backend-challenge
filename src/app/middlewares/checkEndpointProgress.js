@@ -11,17 +11,17 @@ export default async (req, res, next) => {
     where: {
       endpoint_id: req.endpointId,
     },
+    order: ['order'],
   });
 
   const beforeEndpointsWithNoAwnswers = await EndpointField.findAll({
+    attributes: ['title'],
     include: [
       {
         model: EndpointFieldValue,
         as: 'values',
         required: false,
-        where: {
-          id: null,
-        },
+        attributes: ['user_id', 'value'],
       },
       {
         model: Endpoint,
@@ -34,22 +34,41 @@ export default async (req, res, next) => {
               [Op.lt]: currentOrder,
             },
           },
+          attributes: ['order'],
         },
+        attributes: ['id', 'slug'],
       },
     ],
   });
 
   const beforeEndpointsWithNoAwnswersFiltered = beforeEndpointsWithNoAwnswers.filter(
-    item => item.endpoint
+    item => item.endpoint && item.values.length === 0
   );
-
-  return res.json(beforeEndpointsWithNoAwnswers);
 
   if (beforeEndpointsWithNoAwnswersFiltered.length > 0) {
     return res.status(400).json({
-      error: `Please, enter your ${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug} data.`,
+      error: `Please, enter your ${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug.toUpperCase()} data first`,
+      next_end_point: `/endpoints/${beforeEndpointsWithNoAwnswersFiltered[0].endpoint.slug}`,
     });
   }
+
+  const nextEndpoint = await Endpoint.findOne({
+    attributes: ['slug'],
+    include: [
+      {
+        model: EndpointOrder,
+        as: 'order',
+        where: {
+          order: {
+            [Op.gt]: currentOrder,
+          },
+        },
+        attributes: [],
+      },
+    ],
+  });
+
+  req.nextEndPointSlug = nextEndpoint.getDataValue('slug');
 
   return next();
 };

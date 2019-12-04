@@ -1,52 +1,86 @@
-import Endpoint from '../models/Endpoint';
 import EndpointField from '../models/EndpointsField';
 import EndpointFieldValue from '../models/EndpointsFieldValue';
-import EndpointOrder from '../models/EndpointsOrder';
 
 class EndpointController {
   async store(req, res) {
-    const { slug } = req.params;
     const { data } = req.body;
 
-    const endpoint = await Endpoint.findOne({
-      attributes: ['id', 'slug'],
+    const fields = await EndpointField.findAll({
+      where: {
+        endpoint_id: req.endpointId,
+      },
+      attributes: ['id', 'title', 'created_at', 'updated_at'],
       include: [
         {
-          model: EndpointField,
-          as: 'fields',
-          attributes: ['id', 'title'],
-          include: [
-            {
-              model: EndpointFieldValue,
-              as: 'values',
-              order: [['created_at', 'desc']],
-              limit: 1,
-              where: {
-                user_id: req.userId,
-              },
-            },
-          ],
-        },
-        {
-          model: EndpointOrder,
-          as: 'order',
-          attributes: ['id', 'order'],
+          model: EndpointFieldValue,
+          as: 'values',
+          where: {
+            user_id: req.userId,
+          },
+          order: [['created_at', 'desc']],
+          required: false,
+          limit: 1,
         },
       ],
-      where: { slug },
     });
 
-    if (typeof data === 'object') {
-      // ...
+    if (fields.length > 1) {
+      if (typeof data !== 'object')
+        return res.status(400).json({ error: 'Data object malformed' });
+    } else if (typeof data !== 'string')
+      return res.status(400).json({ error: 'Data object malformed' });
+
+    // if data received from body is an object, means that we need to insert more than one field value into database
+    if (fields.length > 1) {
+      fields.map(field => {
+        if (!data[field.getDataValue('title')]) {
+          return res.status(400).json({
+            error: `Please, provide ${field.getDataValue('title')} field`,
+          });
+        }
+
+        return field;
+      });
+
+      Promise.all(
+        fields.map(field => {
+          if (
+            !field.getDataValue('values')[0] ||
+            field.getDataValue('values')[0].value !==
+              data[field.getDataValue('title')]
+          ) {
+            return EndpointFieldValue.create({
+              endpoints_field_id: field.getDataValue('id'),
+              value: data[field.getDataValue('title')],
+              user_id: req.userId,
+            });
+          }
+
+          return field;
+        })
+      );
     } else {
-      // await EndpointFieldValue.create({
-      //   user_id: req.userId,
-      //   endpoints_field_id: endpoint.getDataValue('fields')[0].id,
-      //   value: data,
-      // });
+      const fieldValue = await EndpointFieldValue.findOne({
+        where: {
+          endpoints_field_id: fields[0].getDataValue('id'),
+          user_id: req.userId,
+        },
+        order: [['created_at', 'desc']],
+      });
+
+      if (!fieldValue || fieldValue.getDataValue('value') !== data) {
+        await EndpointFieldValue.create({
+          endpoints_field_id: fields[0].getDataValue('id'),
+          value: data,
+          user_id: req.userId,
+        });
+      }
     }
 
-    return res.json({ ok: 'ok' });
+    return res.json({
+      success: true,
+      next_end_point: `/endpoints/${req.nextEndPointSlug}`,
+    });
   }
 }
 
