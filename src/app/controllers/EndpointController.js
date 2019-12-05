@@ -77,10 +77,15 @@ class EndpointController {
       }
     }
 
-    return res.json({
+    const responseObject = {
       success: true,
-      next_end_point: `/endpoints/${req.nextEndPointSlug}`,
-    });
+    };
+
+    if (req.nextEndPointSlug) {
+      responseObject.next_end_point = req.nextEndPointSlug;
+    }
+
+    return res.json(responseObject);
   }
 }
 

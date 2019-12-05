@@ -70,12 +70,6 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          endpoint_id: 5,
-          title: 'country',
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-        {
           endpoint_id: 6,
           title: 'amount',
           created_at: new Date(),

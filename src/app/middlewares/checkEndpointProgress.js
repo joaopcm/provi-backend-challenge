@@ -68,7 +68,9 @@ export default async (req, res, next) => {
     ],
   });
 
-  req.nextEndPointSlug = nextEndpoint.getDataValue('slug');
+  if (nextEndpoint && nextEndpoint.getDataValue('slug')) {
+    req.nextEndPointSlug = nextEndpoint.getDataValue('slug');
+  }
 
   return next();
 };

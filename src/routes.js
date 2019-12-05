@@ -6,7 +6,8 @@ import EndpointController from './app/controllers/EndpointController';
 
 import authMiddleware from './app/middlewares/auth';
 import checkEndpointMiddleware from './app/middlewares/checkEndpoint';
-import checkEndpointProgress from './app/middlewares/checkEndpointProgress';
+import checkEndpointProgressMiddleware from './app/middlewares/checkEndpointProgress';
+import checkDataIntegrityMiddleware from './app/middlewares/checkDataIntegrity';
 
 const routes = new Router();
 
@@ -18,7 +19,8 @@ routes.use(authMiddleware);
 routes.post(
   '/endpoints/:slug',
   checkEndpointMiddleware,
-  checkEndpointProgress,
+  checkEndpointProgressMiddleware,
+  checkDataIntegrityMiddleware,
   EndpointController.store
 );
 
