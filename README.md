@@ -59,6 +59,12 @@ $> yarn dev
 #### Testing manually
 I also have separated a insomnia.json file to improve your manualy tests. First you need to have Insomnia installed on your machine. Then, import "insomnia.json" to your workspace.
 
+#### Testing
+First thing you must do is create .env.test file at project root. Then you can run the following command to run all the TDD tests
+```
+$> yarn test
+```
+
 ## Built With
 
 * [Express](https://expressjs.com/pt-br/) - The restful API framework
