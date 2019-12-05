@@ -11,13 +11,5 @@ services:
       - POSTGRES_DB=provi
       - POSTGRES_PASSWORD=provi
 
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis:/data
-
 volumes:
   postgres:
-  redis:
