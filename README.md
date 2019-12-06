@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src=".github/provi.png" width="200px" />
+  <img alt="Provi" title="Provi" src=".github/provi.png" width="200px" />
 </h1>
 
 <h3 align="center">
@@ -12,7 +12,7 @@
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
 
-  <a href="https://github.com/jopcmelo/gostack-gympoint/stargazers">
+  <a href="https://github.com/jopcmelo/provi-backend-challenge/stargazers">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/jopcmelo/provi-backend-challenge?style=social">
   </a>
 </p>
@@ -78,7 +78,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 * **João Melo** - *Full stack developer ([GitHub profile](https://github.com/jopcmelo))*
 
-See also the list of [contributors](https://github.com/jopcmelo/gostack-gobarber/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/jopcmelo/provi-backend-challenge/contributors) who participated in this project.
 
 ## License
 
